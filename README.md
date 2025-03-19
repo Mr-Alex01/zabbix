@@ -54,7 +54,7 @@
 
 `locale-gen en_US.UTF-8 # добавил отсутствующую локаль (при первой настройке zabbix была ошибка)`
 
-`systemctl restart apache2 # ребут апач`
+`systemctl restart apache2 # ребут апача`
 
 
 ```
