@@ -1,4 +1,4 @@
-# Домашнее задание к занятию "`Название занятия`" - `Фамилия и имя студента`
+# Домашнее задание к занятию "`Система мониторинга Zabbix`" - `Столяренко Александр`
 
 
 ### Инструкция по выполнению домашнего задания
@@ -26,12 +26,36 @@
 
 `Приведите ответ в свободной форме........`
 
-1. `Заполните здесь этапы выполнения, если требуется ....`
-2. `Заполните здесь этапы выполнения, если требуется ....`
-3. `Заполните здесь этапы выполнения, если требуется ....`
-4. `Заполните здесь этапы выполнения, если требуется ....`
-5. `Заполните здесь этапы выполнения, если требуется ....`
-6. 
+`apt install postgresql postgresql-contrib # установил из репозитория`
+`systemctl enable postgresql # добавил в автозагрузку`
+`sudo -u postgres psql -c "SELECT usename FROM pg_user;" # проверил созданного пользователя`
+
+`wget https://repo.zabbix.com/zabbix/7.2/release/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_7.2+ubuntu24.04_all.deb # добавил репозиторий zabbix последней версии`
+
+`dpkg -i zabbix-release_latest_7.2+ubuntu24.04_all.deb # установил репозиторий zabbix`
+
+`apt update`
+
+`apt install zabbix-server-pgsql zabbix-frontend-php php8.3-pgsql zabbix-apache-conf zabbix-sql-scripts zabbix-agent # установил zabbix-сервер, апач, агент`
+
+`su - postgres -c 'psql --command "CREATE USER zabbix WITH PASSWORD # скрипт для создания пользователя zabbix'\'123456789\'';"'`
+
+`su - postgres -c 'psql --command "CREATE DATABASE zabbix OWNER zabbix;"' # скрипт для создания базы данных zabbix`
+
+`sed -i 's/# DBPassword=/DBPassword=123456789/g' /etc/zabbix/zabbix_server.conf # добавил пароль на вход в конфиг zabbix`
+
+`systemctl restart zabbix-server apache2 # ребут zabbix и апач`
+
+`systemctl enable zabbix-server apache2 # добавил их в автозагрузку`
+
+=== После входа на веб-интерефейс ===
+
+`locale -a # посмотрел существующие локали`
+
+`locale-gen en_US.UTF-8 # добавил отсутствующую локаль (при первой настройке zabbix была ошибка)`
+
+`systemctl restart apache2 # ребут апач`
+
 
 ```
 Поле для вставки кода...
@@ -42,7 +66,7 @@
 ```
 
 `При необходимости прикрепитe сюда скриншоты
-![Название скриншота 1](ссылка на скриншот 1)`
+![1](https://github.com/Mr-Alex01/zabbix/blob/main/img/Сохраненное%20изображение%202025-3-19_4-5-44.724.jpg)`
 
 
 ---
